@@ -1,12 +1,21 @@
+# Gunakan image PHP + Apache
 FROM php:8.1-apache
-# Install extensions and composer
-RUN apt-get update && apt-get install -y libzip-dev unzip git && docker-php-ext-install pdo pdo_mysql
-COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
-WORKDIR /var/www/html
-# Enable apache rewrite
-RUN a2enmod rewrite
+
+# Install ekstensi yang dibutuhkan
+RUN docker-php-ext-install mysqli && docker-php-ext-enable mysqli
+
+# Copy source code ke dalam container
 COPY backend/ /var/www/html/
+
+# Ubah permission agar Apache bisa akses
 RUN chown -R www-data:www-data /var/www/html
-RUN composer install --no-dev || true
+
+# Aktifkan mod_rewrite untuk routing PHP (jika pakai)
+RUN a2enmod rewrite
+
+# Set working directory
+WORKDIR /var/www/html
+
+# Expose port 80
 EXPOSE 80
-CMD ["apache2-foreground"]
+

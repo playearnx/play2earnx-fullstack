@@ -4,13 +4,17 @@ services:
     env: docker
     dockerfilePath: ./Dockerfile
     dockerContext: .
+    plan: free
+    autoDeploy: true
+    buildCommand: ""
+    startCommand: "apache2-foreground"
     envVars:
       - key: DB_HOST
-        value: play2earnx-db
+        value: your-db-host.render.com
       - key: DB_USER
-        value: root
+        value: your-db-user
       - key: DB_PASS
-        value: example
+        value: your-db-password
       - key: DB_NAME
         value: play2earnx
       - key: SMTP_HOST
@@ -25,22 +29,3 @@ services:
         generateValue: true
       - key: DEBUG_SHOW_OTP
         value: true
-    plan: free
-    autoDeploy: true
-    buildCommand: ""
-    startCommand: "apache2-foreground"
-
-  - type: pserv
-    name: play2earnx-db
-    env: docker
-    dockerCommand: "mysqld"
-    image: mysql:8.0
-    envVars:
-      - key: MYSQL_ROOT_PASSWORD
-        value: example
-      - key: MYSQL_DATABASE
-        value: play2earnx
-    disk:
-      name: data
-      mountPath: /var/lib/mysql
-      sizeGB: 1

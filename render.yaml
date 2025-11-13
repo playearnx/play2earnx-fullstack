@@ -6,8 +6,6 @@ services:
     dockerContext: .
     plan: free
     autoDeploy: true
-    buildCommand: ""
-    startCommand: "apache2-foreground"
     envVars:
       - key: DB_HOST
         value: your-db-host.render.com

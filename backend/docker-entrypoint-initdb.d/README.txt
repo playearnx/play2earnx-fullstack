@@ -1,0 +1,1 @@
+Place SQL files here if you want MySQL container to initialize DB on first run. Use includes/readme_db.sql from backend folder.
